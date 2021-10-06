@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador</title>
+    <link rel="stylesheet" href="{% static 'App/Css/styles.css' %}">
+</head>
+<body>
+    <div>
+        <h1>Simulador</h1>
+    </div>
+    <nav>
+        <ul>
+            <li><a href=''>Inicio</a></li>
+            <li><a href="archivos">Cargar Archivo</a></li>
+            <li><a href="peticiones">Peticiones</a></li>
+            <li><a href="ayuda">Ayuda</a></li>
+        </ul>
+    </nav>
+    {% block content %}{% endblock %}
+</body>
+</html>

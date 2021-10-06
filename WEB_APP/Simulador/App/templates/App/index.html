@@ -1,0 +1,33 @@
+    {% extends 'App/base.html' %}
+    
+    {% block content %}
+    <section>
+        <table>
+            <tr>
+                <td>
+                    <button>enviar</button>
+                </td>
+                <td>
+                    <button>Reset</button>
+                </td>
+            </tr>
+        </table>
+        
+        
+    </section>
+    <section>
+        <form>
+            <table>
+                <tr>
+                    <td>
+                        <textarea name="output" rows="10" cols="50"></textarea>
+                    </td>
+                    <td>
+                        <textarea name="input" rows="10" cols="50"></textarea>
+                    </td>
+                </tr>
+            </table>
+            
+        </form>
+    </section>
+    {% endblock %}
