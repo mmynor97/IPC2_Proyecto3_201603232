@@ -3,8 +3,21 @@ from django.http import  HttpResponse
 from . import models
 from .forms import UploadFileForm
 from django.http import HttpResponseRedirect
+import requests
+
+url = 'http://localhost:4000/'
+
+
 def index(request):
     data = {}
+    if request.method =='POST':
+        cadena=request.POST['input']
+        body = {
+            'cadena':cadena,
+        }
+        salida=requests.post(url+'/datos',json=body)
+        return render(request,'App/index.html', {'cadena':cadena,'salida':salida})
+
     return render(request,'App/index.html',data)
     #return HttpResponse('Hola Mundo')
 # Create your views here.
@@ -22,8 +35,7 @@ def archivos(request):
             #return HttpResponseRedirect('/success/url/')
 
             Title = request.POST['title']
-        #uploadedFile = request.FILES['uploadedFile']
-        
+                
         print(Title)
         
         cadena=""
@@ -49,6 +61,7 @@ def peticiones(request):
     data = {}
     return render(request,'App/peticiones.html',data)
 
+##guardar_archivoXML
 def handle_uploaded_file(f):
     with open('App/archivosXML/archivo.xml', 'wb+') as destination:
         for chunk in f.chunks():
