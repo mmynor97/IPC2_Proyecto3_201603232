@@ -10,14 +10,19 @@ url = 'http://localhost:4000/'
 
 def index(request):
     data = {}
-    if request.method =='POST':
-        cadena=request.POST['input']
-        body = {
-            'cadena':cadena,
+    if 'Enviar' in request.POST:
+        cadena=request.POST['output']
+        print("-----------------")
+        print(cadena)
+        mybody = {
+        'cadena': cadena,
         }
         print('\n'+cadena)
-        salida=requests.post(url+'/datos',json=body)
-        return render(request,'App/index.html', {'cadena':cadena,'salida':salida})
+        salida=requests.post(url+'/datos',json=mybody)
+        return render(request,'App/index.html', {'cadena':cadena,'salida':salida.text})
+    elif 'Eliminar' in request.POST:
+        eliminar = requests.post(url+'/datosEliminados')
+        return render(request,'App/index.html',data)
 
     return render(request,'App/index.html',data)
     #return HttpResponse('Hola Mundo')
@@ -60,6 +65,10 @@ def ayuda(request):
 
 def peticiones(request):
     data = {}
+    if 'consultaG' in request.GET:
+        consulta = requests.get(url+'/consultaGeneral')
+        return render(request,'App/peticiones.html',{'general': consulta.text})
+        
     return render(request,'App/peticiones.html',data)
 
 ##guardar_archivoXML

@@ -6,7 +6,8 @@
     <div class="card-body">
         <form action="{% url 'index' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <input type="submit" value="Enviar">
+            <input type="submit" value="Enviar" name="Enviar">
+            <input type="submit" value="Eliminar"name="Eliminar">
             <div class="form-group">
                 <textarea class="form-control" name="output" id="output" cols="30" rows="10">{{cadena}}</textarea>
             </div>

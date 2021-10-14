@@ -1,1 +1,20 @@
 {% extends 'App/base.html' %}
+
+{% load static %}
+    
+    {% block content %}
+    <div class="card-body">
+        <h2>CONSULTA GENERAL</h2>
+        <form action="" method="GET" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="submit" value="Enviar" name="Enviar">
+            <div class="form-group">
+                <textarea class="form-control" name="consultaG" id="consultaG" cols="30" rows="10">{{general}}</textarea>
+            </div>
+                        
+        </form>
+        
+        
+    </div>
+   
+    {% endblock %}

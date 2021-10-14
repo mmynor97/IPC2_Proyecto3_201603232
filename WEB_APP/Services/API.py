@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, jsonify, request, Response
 from flask_cors import CORS
 from Clases.File_Xml import File_Xml
 from Clases.Output import Output
@@ -12,20 +12,41 @@ def getDatos():
     with open('bdd/entrada.xml', 'w') as archivo:
         archivo.write(cadena)
     archivo.close()
-
+    print(cadena)
     scanner = File_Xml('bdd/entrada.xml')
     result=scanner.read()
     
     salida=Output(result)
-    salida.write(result.correcta,result.incorrecta)
+    salida.write()
     
     cadena_salida=None
-    with open('bdd/entrada.xml', 'r') as scann:
+    with open('bdd/salida.xml', 'r') as scann:
         for linea in scann:
-            cadena_salida +=linea
+            cadena_salida = linea
 
     return cadena_salida
 
+@app.route('/datosEliminados', methods=['POST'])
+def eliminacion_datos():
+    with open('bdd/entrada.xml', 'w') as archivo_entrada:
+        archivo_entrada.write("")
+    archivo_entrada.close()
+    with open('bdd/salida.xml', 'w') as archivo_salida:
+        archivo_salida.write("")
+    archivo_salida.close()
+    pass
+
+@app.route('/consultaGeneral',methods=['GET'])
+def consultaG():
+    cadena_salida=None
+    with open('bdd/salida.xml', 'r') as scann:
+        for linea in scann:
+            cadena_salida = linea
+    
+    if cadena_salida == None:
+        cadena_salida="No existe base de datos"
+
+    return cadena_salida
     
 
 
