@@ -15,6 +15,7 @@ def index(request):
         body = {
             'cadena':cadena,
         }
+        print('\n'+cadena)
         salida=requests.post(url+'/datos',json=body)
         return render(request,'App/index.html', {'cadena':cadena,'salida':salida})
 

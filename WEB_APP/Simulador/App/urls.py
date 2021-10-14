@@ -5,9 +5,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('',views.index,name='index'),
-    path('archivos/',views.archivos,name='archivos'),
-    path('peticiones/',views.peticiones,name='peticiones'),
-    path('ayuda/',views.ayuda,name='ayuda')
+    path('file',views.archivos,name='archivos'),
+    path('peticiones',views.peticiones,name='peticiones'),
+    path('ayuda',views.ayuda,name='ayuda')
 ]
 
 if settings.DEBUG: 

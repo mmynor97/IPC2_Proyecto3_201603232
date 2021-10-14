@@ -18,7 +18,7 @@ def getDatos():
     
     salida=Output(result)
     salida.write(result.correcta,result.incorrecta)
-
+    
     cadena_salida=None
     with open('bdd/entrada.xml', 'r') as scann:
         for linea in scann:
@@ -30,4 +30,4 @@ def getDatos():
 
 
 if __name__== '__main__':
-    app.run(host='0.0.0.0',debug=True,port=4000)
+    app.run(host='0.0.0.0', debug=True, port=4000)
