@@ -4,8 +4,12 @@ from . import models
 from .forms import UploadFileForm
 from django.http import HttpResponseRedirect
 import requests
+from reportlab.pdfgen import canvas
+import numpy as np
+import matplotlib.pyplot as plt
 
 url = 'http://localhost:4000/'
+
 
 
 def index(request):
@@ -26,7 +30,7 @@ def index(request):
 
     return render(request,'App/index.html',data)
     #return HttpResponse('Hola Mundo')
-# Create your views here.
+
 
 
 def archivos(request):
@@ -65,11 +69,49 @@ def ayuda(request):
 
 def peticiones(request):
     data = {}
-    if 'consultaG' in request.GET:
+    if 'EnviarG' in request.GET:
         consulta = requests.get(url+'/consultaGeneral')
         return render(request,'App/peticiones.html',{'general': consulta.text})
+
+    elif 'reporteG' in request.GET:
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment ; filename=reporte.pdf'
+
+        consulta = requests.get(url+'/consultaGeneral')
+
+        p = canvas.Canvas(response)
+
+        p.drawString(50,800,consulta.text)
+        p.showPage()
+        p.save()
+        
+        return response
+    
+    
         
     return render(request,'App/peticiones.html',data)
+
+def pdfNit(request):
+    if 'reporteFec' in request.POST:
+        fecha = request.POST['fechaInicialFec']
+        mybody = {
+        'fecha': fecha,
+        }
+        print(mybody)
+        consulta=requests.post(url+'/consultaNit',json=mybody)
+        
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment ; filename=reporteNit.pdf'
+
+        
+        p = canvas.Canvas(response)
+
+        p.drawString(50,800,consulta.text)
+        p.showPage()
+        p.save()
+        
+        return response
+    
 
 ##guardar_archivoXML
 def handle_uploaded_file(f):

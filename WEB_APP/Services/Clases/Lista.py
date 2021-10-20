@@ -14,7 +14,7 @@ class Lista:
             
         else:
             temporal = DTE
-            self.final.setNext(temporal)
+            self.final.siguiente =temporal
             self.final=temporal
             self.tamanio+=1
             
@@ -26,7 +26,7 @@ class Lista:
                 print("\nadvertencia: No hay ordenes.\n")
         else:
             temporal = self.inicio
-            self.inicio= self.inicio.getNext()
+            self.inicio= self.inicio.siguiente
             self.tamanio-=1
         return temporal
 
@@ -38,14 +38,14 @@ class Lista:
             print("Las Ordenes son: \n")
             while aux != None:
                 print(f" nombre: {aux.getOrden().getNombre()} Ingrediente: {aux.getOrden().getIngrediente()}")
-                aux = aux.getNext()
+                aux = aux.siguiente
             print(" ")
 
     def get(self,_key):
         temporalNodo = self.inicio
         if temporalNodo!=None:
             for i in range(0, _key, 1):
-                temporalNodo = temporalNodo.getNext()
+                temporalNodo = temporalNodo.siguiente
             if temporalNodo != None:
                 return temporalNodo
             else:

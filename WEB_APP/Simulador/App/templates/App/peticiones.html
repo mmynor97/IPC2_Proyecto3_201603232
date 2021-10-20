@@ -7,7 +7,9 @@
         <h2>CONSULTA GENERAL</h2>
         <form action="" method="GET" enctype="multipart/form-data">
             {% csrf_token %}
-            <input type="submit" value="Enviar" name="Enviar">
+            <input type="submit" value="Enviar" name="EnviarG">
+            <input type="submit" value="PDF" name="reporteG">
+            
             <div class="form-group">
                 <textarea class="form-control" name="consultaG" id="consultaG" cols="30" rows="10">{{general}}</textarea>
             </div>
@@ -15,6 +17,41 @@
         </form>
         
         
+    </div>
+
+    <div class="card-body">
+        <h2>CONSULTA POR FECHA Y NIT</h2>
+        <form action="{% url 'dowloadNit' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            Fecha:<input type="text" name="fechaInicialFec">
+            <br><br>
+            <input type="submit" value="PDF" name="reporteFec">
+            <input type="submit" value="Grafica" name="graficaFec">
+                                    
+        </form>
+    </div>
+
+    <div class="card-body">
+        <h2>CONSULTA POR FECHA Y NIT</h2>
+        <form action="" method="GET" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>
+                Fecha Inicial:<input type="text" name="fechaInicialRang">
+            </p>
+            
+             <p>
+               Fecha Final: <input type="text" name="fechaFinalRang">
+             </p> 
+            
+            <input type="submit" value="Consultar" name="ConsultaRang">
+            <input type="submit" value="Reporte PDF" name="reporteRang">
+            <input type="submit" value="Grafica" name="graficaRang">
+            <br><br>
+            <div class="form-group">
+                <textarea class="form-control" name="consultaRang" id="consultaRang" cols="30" rows="10"></textarea>
+            </div>
+                        
+        </form>
     </div>
    
     {% endblock %}

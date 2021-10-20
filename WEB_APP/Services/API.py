@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request, Response
 from flask_cors import CORS
 from Clases.File_Xml import File_Xml
 from Clases.Output import Output
+from Clases.outAnalizador import outAnalizador
 app = Flask(__name__)
 CORS(app)
 
@@ -47,8 +48,20 @@ def consultaG():
         cadena_salida="No existe base de datos"
 
     return cadena_salida
-    
 
+@app.route('/consultaNit',methods=['POST'])
+def consultaFecNit():
+
+    fecha=request.json['fecha']
+
+    scanner = File_Xml('bdd/entrada.xml')
+    result=scanner.readAnalizardor(fecha)
+    print(result.tamanio)
+        
+    salida=outAnalizador(result)
+    cadena=salida.writeNit()
+
+    return cadena
 
 if __name__== '__main__':
     app.run(host='0.0.0.0', debug=True, port=4000)

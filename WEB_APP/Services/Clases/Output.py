@@ -1,12 +1,13 @@
 import xml.etree.cElementTree as ET
 from datetime import date
 from Clases.Lista import Lista
+import re
 class Output:
     def __init__(self,lista):
         self.__root= ET.Element("LISTAAUTORIZACIONES")
         self.lista=lista
         self.__factura= Lista()
-
+    
     def write(self):
         autorizacion = ET.SubElement(self.__root,"AUTORIZACION")
         
@@ -18,13 +19,14 @@ class Output:
         nitEmisor = ET.SubElement(error,"NIT_EMISOR").text = str(emisor)
         receptor= self.__nitReceptor()
         nitReceptor = ET.SubElement(error,"NIT_RECEPTOR").text = str(receptor)
-        valor = self.__valor()
-        iva = ET.SubElement(error,"IVA").text = str(valor)
-        total = ET.SubElement(error,"TOTAL").text = str(valor)
+        totalRestul = self.__total()
+        ivaResult= self.__iva()
+        iva = ET.SubElement(error,"IVA").text = str(ivaResult)
+        total = ET.SubElement(error,"TOTAL").text = str(totalRestul)
         refD = self.__refDubplicada()
         ref_duplicada = ET.SubElement(error,"REFERENCIA_DUPLICADA").text = str(refD)
 
-        factura_incorrecta= int(emisor) + int(receptor) +  int(valor) + int(valor) + int(refD)
+        factura_incorrecta= int(emisor) + int(receptor) +  int(ivaResult) + int(totalRestul) + int(refD)
         correcta = self.lista.tamanio - factura_incorrecta
         if correcta < 0:
             correcta = 0
@@ -104,13 +106,18 @@ class Output:
         
         return error
 
-    def __valor(self):
+    def __total(self):
         error=0
         for i in range(self.lista.tamanio):
             dte = self.lista.get(i)
             valor=dte.valor
+            iva = dte.iva 
+
+            total = float(valor) + float(iva)
 
             if float(valor)<0.00:
+                error +=1
+            elif not total == float(dte.total):
                 error +=1
             else:
                 self.__factura.push(dte)
@@ -156,6 +163,21 @@ class Output:
 
         return len(unico)
 
-        
+    def __iva(self):
+        error=0
+        for i in range(self.lista.tamanio):
+            dte = self.lista.get(i)
+            iva=dte.iva
+            valor= dte.valor
+            
+            resultado = re.sub("^[0-9]*[.]","",iva)  
+
+            if float(valor)<0.00:
+                error +=1
+            elif not len(resultado) == 2:
+                error +=1
+            else:
+                self.__factura.push(dte)
+        return error
 
             

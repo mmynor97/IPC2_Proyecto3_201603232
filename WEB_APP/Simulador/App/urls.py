@@ -7,7 +7,8 @@ urlpatterns = [
     path('',views.index,name='index'),
     path('file',views.archivos,name='archivos'),
     path('peticion',views.peticiones,name='peticiones'),
-    path('ayuda',views.ayuda,name='ayuda')
+    path('ayuda',views.ayuda,name='ayuda'),
+    path('dowloadNit',views.pdfNit,name='dowloadNit'),
 ]
 
 if settings.DEBUG: 
