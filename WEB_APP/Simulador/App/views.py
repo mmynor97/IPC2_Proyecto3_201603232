@@ -112,6 +112,21 @@ def pdfNit(request):
         
         return response
     
+    elif 'graficaFec' in request.POST:
+        fecha = request.POST['fechaInicialFec']
+        mybody = {
+        'fecha': fecha,
+        }
+        cantidad = requests.post(url+'/graficaNit',json=mybody)
+
+        fec = [fecha]
+        mapeado = range(len(fec))
+
+        plt.plot(cantidad)
+        plt.xticks(mapeado, fec)  # Mapeamos los valores horizontales
+        plt.show() 
+        pass
+    
 
 ##guardar_archivoXML
 def handle_uploaded_file(f):

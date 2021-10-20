@@ -63,5 +63,16 @@ def consultaFecNit():
 
     return cadena
 
+@app.route('/graficaNit',methods=['POST'])
+def graficaFecNit():
+
+    fecha=request.json['fecha']
+
+    scanner = File_Xml('bdd/entrada.xml')
+    result=scanner.readAnalizardor(fecha)
+    
+
+    return result.tamanio
+
 if __name__== '__main__':
     app.run(host='0.0.0.0', debug=True, port=4000)
