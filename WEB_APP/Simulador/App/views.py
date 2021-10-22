@@ -121,12 +121,36 @@ def pdfNit(request):
 
         fec = [fecha]
         mapeado = range(len(fec))
-
         plt.plot(cantidad)
         plt.xticks(mapeado, fec)  # Mapeamos los valores horizontales
         plt.show() 
         pass
     
+def pdfFecha(request):
+    if 'reporteRang' in request.POST:
+        fecha1 = request.POST['fechaInicialRang']
+        fecha2 = request.POST['fechaFinalRang']
+        mybody = {
+        'fecha1': fecha1,
+        'fecha2': fecha2,
+        }
+        print(mybody)
+        consulta=requests.post(url+'/rangoNit',json=mybody)
+        
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment ; filename=reporteFecha.pdf'
+
+        
+        p = canvas.Canvas(response)
+
+        p.drawString(50,800,consulta.text)
+        p.showPage()
+        p.save()
+        
+        return response
+    
+    return HttpResponse('Hola Mundo')
+
 
 ##guardar_archivoXML
 def handle_uploaded_file(f):

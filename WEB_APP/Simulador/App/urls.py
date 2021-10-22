@@ -9,6 +9,7 @@ urlpatterns = [
     path('peticion',views.peticiones,name='peticiones'),
     path('ayuda',views.ayuda,name='ayuda'),
     path('dowloadNit',views.pdfNit,name='dowloadNit'),
+    path('dowloadFecha',views.pdfFecha,name='dowloadFecha'),
 ]
 
 if settings.DEBUG: 

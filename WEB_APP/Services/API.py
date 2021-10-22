@@ -74,5 +74,24 @@ def graficaFecNit():
 
     return result.tamanio
 
+@app.route('/rangoNit',methods=['POST'])
+def rangoNit():
+    fecha1=request.json['fecha1']
+    fecha2=request.json['fecha2']
+
+    
+    scanner = File_Xml('bdd/entrada.xml')
+    result=scanner.readAnalizardorFechaRango(fecha1,fecha2)
+
+    #print(result.tamanio)
+
+    salida=outAnalizador(result)
+
+    cadena=salida.writeNit()
+
+    return cadena
+    
+    
+
 if __name__== '__main__':
     app.run(host='0.0.0.0', debug=True, port=4000)
