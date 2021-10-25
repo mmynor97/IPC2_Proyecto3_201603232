@@ -71,8 +71,9 @@ def graficaFecNit():
     scanner = File_Xml('bdd/entrada.xml')
     result=scanner.readAnalizardor(fecha)
     
+    print(result.tamanio)
 
-    return result.tamanio
+    return str(result.tamanio)
 
 @app.route('/rangoNit',methods=['POST'])
 def rangoNit():
@@ -90,6 +91,51 @@ def rangoNit():
     cadena=salida.writeNit()
 
     return cadena
+
+@app.route('/graficaRango',methods=['POST'])
+def graficaRango():
+
+    fecha1=request.json['fecha1']
+    fecha2=request.json['fecha2']
+
+    
+    scanner = File_Xml('bdd/entrada.xml')
+    result=scanner.readAnalizardorFechaRango(fecha1,fecha2)
+
+    dic = {}
+
+    for i in range(result.tamanio):
+        dte=result.get(i)
+        tiempo = dte.tiempo
+        encontrado = False 
+        if len(dic) == 0:
+            dic[tiempo] = float(dte.total)
+        else:
+            keys= dic.keys()
+            for key in keys:
+                if key == tiempo:
+                    encontrado = True
+                    break
+            
+            if encontrado:
+                aux ={}
+                total=dic.get(tiempo)
+                auxTotal = total + float(dte.total)
+                aux[tiempo] = auxTotal
+                dic.update(aux)
+            else:
+                dic[tiempo] = float(dte.total)
+            
+    return jsonify(dic)
+
+
+
+
+
+
+
+
+    
     
     
 

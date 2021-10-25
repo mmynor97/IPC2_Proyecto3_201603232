@@ -30,7 +30,11 @@
                                     
         </form>
     </div>
-
+    <canvas id="chart" width="25" height="25"></canvas>
+    
+    <br>
+    <br>
+    
     <div class="card-body">
         <h2>CONSULTA POR RANGO DE FECHA</h2>
         <form action="{% url 'dowloadFecha' %}" method="POST" enctype="multipart/form-data">
@@ -44,5 +48,30 @@
                                     
         </form>
     </div>
-   
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        var ctx = document.getElementById('chart').getContext('2d');
+        const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+        labels: ['{{labels}}'],
+        datasets: [{
+            label: '{{labels}}',
+            data: '{{data}}',
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                
+            ],
+            borderWidth: 1
+        }]
+    },
+    
+});
+      </script>
     {% endblock %}

@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 import requests
 from reportlab.pdfgen import canvas
 import numpy as np
-import matplotlib.pyplot as plt
+from django.http import JsonResponse
 
 url = 'http://localhost:4000/'
 
@@ -117,14 +117,19 @@ def pdfNit(request):
         mybody = {
         'fecha': fecha,
         }
+        labels = []
+        data = []
+        labels.append(fecha)
         cantidad = requests.post(url+'/graficaNit',json=mybody)
-
-        fec = [fecha]
-        mapeado = range(len(fec))
-        plt.plot(cantidad)
-        plt.xticks(mapeado, fec)  # Mapeamos los valores horizontales
-        plt.show() 
-        pass
+        cant = int(cantidad.text)
+        data.append(cant)
+        return render(request,'App/peticiones.html',{
+            'labels': fecha,
+            'data' : cant 
+        })
+        
+   
+        
     
 def pdfFecha(request):
     if 'reporteRang' in request.POST:
