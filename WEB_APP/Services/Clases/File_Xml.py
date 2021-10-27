@@ -151,7 +151,7 @@ class File_Xml:
                             else:
                                 saltar = True
                                 continue
-                            dte.tiempo = atribute.text
+                            dte.tiempo = resultado[0]
                         elif "REFERENCIA" == atribute.tag:
                             dte.referencia = atribute.text
                             print(f'referencia {atribute.text}')
@@ -173,8 +173,8 @@ class File_Xml:
                 self.correcta += 1
             except:
                 self.incorrecta +=1
+                print("<--ERROR-->")
         return self.lista_xml
-
      
 
     

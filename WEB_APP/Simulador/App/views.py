@@ -5,8 +5,8 @@ from .forms import UploadFileForm
 from django.http import HttpResponseRedirect
 import requests
 from reportlab.pdfgen import canvas
-import numpy as np
 from django.http import JsonResponse
+import json
 
 url = 'http://localhost:4000/'
 
@@ -153,6 +153,34 @@ def pdfFecha(request):
         p.save()
         
         return response
+    elif 'graficaRang' in request.POST:
+        fecha1 = request.POST['fechaInicialRang']
+        fecha2 = request.POST['fechaFinalRang']
+        mybody = {
+        'fecha1': fecha1,
+        'fecha2': fecha2,
+        }
+        labels = []
+        data = []
+        query = requests.post(url+'/graficaRango',json=mybody)
+        dic = json.loads(query.text)
+
+        for key in dic.keys():
+            labels.append(key)
+        
+           
+        
+        json_labels = json.dumps(labels)
+        for item in dic.values():
+            data.append(float(item))
+        
+        
+
+        json_data = json.dumps(data)
+        return render(request,'App/graficaRango.html',{
+            'labels': json_labels,
+            'data' : json_data 
+        })
     
     return HttpResponse('Hola Mundo')
 
