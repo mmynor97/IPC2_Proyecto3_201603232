@@ -42,6 +42,7 @@ class Output:
             referencia = {"ref":dte.referencia}
             nit_emisor = ET.SubElement(aprobacion,"NIT_EMISOR",attrib=referencia).text = str(dte.nit_emisor)
             cod_aprobacion = ET.SubElement(aprobacion,"CODIGO_APROBACION").text = '000000'+str(i)
+            totalResultante = ET.SubElement(aprobacion,"TOTAL").text = str(dte.total)
 
         if correcta < 0:
             correcta = 0
@@ -179,5 +180,14 @@ class Output:
             else:
                 self.__factura.push(dte)
         return error
+
+    def totalFacturas(self):
+        total = 0
+        for i in range(self.__factura.tamanio):
+            dte1=self.__factura.get(i)
+            auxT = dte1.total
+            total+=auxT
+
+        return total
 
             
